@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require_relative 'config/app'
+
+db = App.connection
+
+# By default columns are an Array and you can't access
+# their column through column names
+db.results_as_hash = true
+
+rows = db.execute('SELECT * FROM users LIMIT 5;')
+
+puts 'No users registered' if rows.empty?
+
+rows.each do |row|
+  login, password = row['login'], row['password']
+
+  puts "user: #{login} password: #{password}"
+end
