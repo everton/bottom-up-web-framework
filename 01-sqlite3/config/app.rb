@@ -1,7 +1,7 @@
 require 'sqlite3'
 
 class App
-  DATABASE = 'db/development.sql'
+  DATABASE = File.join(File.dirname(__FILE__), '..', 'db', 'development.sql')
 
   def self.connection
     SQLite3::Database.new DATABASE

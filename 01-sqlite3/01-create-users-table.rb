@@ -2,7 +2,7 @@
 
 require 'sqlite3'
 
-db = SQLite3::Database.new 'db/development.sql'
+db = SQLite3::Database.new '01-sqlite3/db/development.sql'
 
 create_sql = %q{
   CREATE TABLE IF NOT EXISTS users (
