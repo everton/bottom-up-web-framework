@@ -2,6 +2,7 @@
 
 require 'pathname'
 require 'webrick'
+require 'erb'
 
 class App
   class << self
