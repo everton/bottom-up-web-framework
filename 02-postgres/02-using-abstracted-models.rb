@@ -4,9 +4,14 @@ require_relative 'config/app'
 
 App.boot!
 
-users = User.all(limit: 5)
-
 Video.delete_all
+ User.delete_all
+
+10.times do |n|
+  User.create login: "user#{n}", password: 'secret'
+end
+
+users = User.all(limit: 5)
 
 puts "All videos: #{Video.all.inspect}"
 

@@ -1,3 +1,4 @@
+# TODO: queries are specific for each Driver
 module Finders
   def all(options = {})
     options[:where] ||= {}
@@ -6,7 +7,7 @@ module Finders
     sql += where options[:where]
     sql += limit options[:limit]
 
-    connection.execute(sql, options[:where]).map do |columns|
+    connection.exec_params(sql, options[:where].values).map do |columns|
       self.new columns
     end
   end
@@ -19,8 +20,8 @@ module Finders
   def where(conditions = {})
     return '' if conditions.empty?
 
-    # ['k1=:k1', 'k2=:k2', ...]
-    keys = conditions.keys.map {|k, _| "#{k}=:#{k}" }
+    # ['k1=$1', 'k2=$2', ...]
+    keys = conditions.keys.each_with_index.map {|k, i| "#{k}=$#{ i + 1}" }
 
     " WHERE #{keys.join ' AND '} "
   end

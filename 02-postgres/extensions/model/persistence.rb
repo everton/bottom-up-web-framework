@@ -1,6 +1,6 @@
 module Persistence
   def delete_all
-    connection.execute "DELETE FROM #{table_name};"
+    connection.exec "DELETE FROM #{table_name};"
   end
 
   def create(attrs = {})
@@ -22,26 +22,33 @@ module Persistence
       private
       def save_on_update!
         fields, values = fields_and_values
-        placeholders   = fields.map { |column| "#{column}=?"  }
+
+        # Someting like: INTO ( $1, $2, $3 )...
+        placeholders   = fields.each_with_index.map{|k, i| "#{k}=$#{i + 1}" }
 
         query = "UPDATE #{self.class.table_name} " +
           " SET #{placeholders.join(', ') } " +
           " WHERE id=#{self.id};"
 
-        connection.execute query, values
+        connection.exec_params query, values
       end
 
       def save_on_insert!
         fields, values = fields_and_values
-        placeholders   = values.map{ '?' }
+
+        # Someting like: INTO ( $1, $2, $3 )...
+        placeholders   = values.each_with_index.map{|_, i| "$#{i + 1}" }
 
         query = "INSERT INTO #{self.class.table_name}" +
           " ( #{fields.join ', '} )" +
-          " VALUES ( #{placeholders.join ', '} );"
+          " VALUES ( #{placeholders.join ', '} )" +
+          " RETURNING *;"
 
-        connection.execute query, values
+        res = connection.exec_params query, values
 
-        self.id = connection.last_insert_row_id
+        # self.id = connection.last_insert_row_id
+
+        self.id = res[0]['id']
       end
 
       def fields_and_values
