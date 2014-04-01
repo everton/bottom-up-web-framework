@@ -15,11 +15,14 @@ class User
     sql  = "SELECT ALL * FROM users"
     sql += " LIMIT #{options[:limit]}" if options[:limit]
 
-    db = App.connection
+    connection.execute(sql).map { |columns| self.new columns }
+  end
 
-    db.results_as_hash = true
-
-    db.execute(sql).map { |columns| self.new columns }
+  private
+  def self.connection
+    @connection ||= App.connection
+    @connection.results_as_hash = true
+    return @connection
   end
 end
 
