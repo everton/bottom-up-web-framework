@@ -5,7 +5,8 @@ require 'benchmark'
 require_relative 'config/app'
 db = App.connection
 
-puts db.get_first_value('SELECT COUNT(*) FROM users;')
+count = db.get_first_value('SELECT COUNT(*) FROM users;')
+puts "There is #{count} users on database now"
 
 begin
   db.transaction do |transaction|
@@ -16,4 +17,5 @@ rescue => e
   puts 'An error has ocurred and the transaction was rolled back'
 end
 
-puts db.get_first_value('SELECT COUNT(*) FROM users;')
+count = db.get_first_value('SELECT COUNT(*) FROM users;')
+puts "There is #{count} users on database now"
