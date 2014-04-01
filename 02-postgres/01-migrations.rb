@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'extenssions/migration'
+require_relative 'extensions/migration'
 
 class CreateUsers < Migration
   def self.change
