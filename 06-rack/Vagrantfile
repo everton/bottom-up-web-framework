@@ -24,7 +24,11 @@ Vagrant::Config.run do |config|
 
     # Update, install...
     cmd << 'apt-get -y update'
-    cmd << 'apt-get -q -y install apache2 libapache2-mod-passenger'
+
+    # Force "conf old" to allow "sites-available" to be a shared folder
+    cmd << 'apt-get -q -y -o Dpkg::Options::="--force-confold" install apache2'
+
+    cmd << 'apt-get -q -y install libapache2-mod-passenger'
 
     # cmd << 'invoke-rc.d apache2 restart'
 

@@ -1,3 +1,5 @@
 *~
 **/.vagrant
 01-sqlite3/db/*
+06-rack/config/apache2-sites-available/default-ssl
+06-rack/config/apache2-sites-available/default.dpkg-dist
