@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+
+Vagrant::Config.run do |config|
+  config.vm.box     = 'bare-wheezy'
+  config.vm.box_url = 'https://dl.dropboxusercontent.com/s/xymcvez85i29lym/vagrant-debian-wheezy64.box'
+
+  config.vm.forward_port 80, 8000
+  config.vm.share_folder "v-data", "/etc/apache2/sites-available/", "./config/apache2-sites-available"
+
+  config.vm.provision :shell do |shell|
+    cmd = []
+    cmd << 'export DEBIAN_FRONTEND=noninteractive'
+
+    # Phusion Passenger repository
+    cmd << 'apt-get -y update'
+
+    cmd << 'apt-get install -y apt-transport-https ca-certificates'
+    cmd << 'apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7'
+
+    cmd << 'echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger wheezy main" > /etc/apt/sources.list.d/passenger.list'
+
+    cmd << 'chown root: /etc/apt/sources.list.d/passenger.list'
+    cmd << 'chmod 600   /etc/apt/sources.list.d/passenger.list'
+
+    # Update, install...
+    cmd << 'apt-get -y update'
+    cmd << 'apt-get -q -y install apache2 libapache2-mod-passenger'
+
+    # cmd << 'invoke-rc.d apache2 restart'
+
+    shell.inline = cmd.join "\n"
+  end
+end

@@ -1,0 +1,6 @@
+<VirtualHost *:80>
+        # ServerName ?
+        ServerAdmin everton.carpes@gmail.com
+
+        DocumentRoot /vagrant/public
+</VirtualHost>
