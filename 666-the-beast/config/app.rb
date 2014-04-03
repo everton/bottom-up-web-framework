@@ -50,8 +50,8 @@ end
 App::LOGGER.info App.boot!
 
 App::LOGGER.info '>>>>>>>>>>>>>>>>>>>>>>>'
-# App::LOGGER.info User.delete_all
 
+App::LOGGER.info User.delete_all
 App::LOGGER.info User.count
 App::LOGGER.info User.create(login: 'POPO').inspect
 App::LOGGER.info User.count

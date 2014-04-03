@@ -1,7 +1,7 @@
 require_relative 'creators' # C
 require_relative 'readers'  # R
-                            # U
-                            # D
+require_relative 'updaters' # U
+require_relative 'deleters' # D
 
 # require_relative 'model/persistence'
 # require_relative 'model/relationships'
@@ -10,8 +10,8 @@ module Model
   class Base
     extend Model::Creators
     extend Model::Readers
-    # extend Model::Updaters
-    # extend Model::Deleters
+    extend Model::Updaters
+    extend Model::Deleters
 
     # extend Relationships
 

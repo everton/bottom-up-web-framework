@@ -75,6 +75,16 @@ module Model
         @connection.execute create_sql
       end
 
+      def delete(table_name, options = {})
+        options[:where] ||= {}
+
+        query = "DELETE FROM #{table_name} #{where(options[:where])}"
+
+        App::LOGGER.debug query
+
+        @connection.execute(query, options[:where])
+      end
+
       private
       def select_query_from_options(table_name, options)
         options[:select] ||= 'ALL *'
