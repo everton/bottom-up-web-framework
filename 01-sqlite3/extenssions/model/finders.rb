@@ -20,7 +20,7 @@ module Finders
     return '' if conditions.empty?
 
     # ['k1=:k1', 'k2=:k2', ...]
-    keys = conditions.keys.map {|k, _| "#{k}=:#{k}" }
+    keys = conditions.keys.map {|k| "#{k}=:#{k}" }
 
     " WHERE #{keys.join ' AND '} "
   end

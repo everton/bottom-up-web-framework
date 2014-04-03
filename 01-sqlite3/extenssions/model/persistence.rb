@@ -24,6 +24,7 @@ module Persistence
         fields, values = fields_and_values
         placeholders   = fields.map { |column| "#{column}=?"  }
 
+        # login=?, password=?..
         query = "UPDATE #{self.class.table_name} " +
           " SET #{placeholders.join(', ') } " +
           " WHERE id=#{self.id};"
