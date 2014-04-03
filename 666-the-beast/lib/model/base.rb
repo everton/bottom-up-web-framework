@@ -1,19 +1,20 @@
-require_relative 'creators' # C
+require_relative 'creaters' # C
 require_relative 'readers'  # R
 require_relative 'updaters' # U
 require_relative 'deleters' # D
 
-# require_relative 'model/persistence'
-# require_relative 'model/relationships'
+require_relative 'relationships'
 
 module Model
   class Base
-    extend Model::Creators
+    attr_accessor :attributes
+
+    extend Model::Creaters
     extend Model::Readers
     extend Model::Updaters
     extend Model::Deleters
 
-    # extend Relationships
+    extend Model::Relationships
 
     def self.connection
       @connection ||= establish_connection
@@ -57,10 +58,28 @@ module Model
       self.class.table_name
     end
 
+    def new_record?
+      id.nil?
+    end
+
+    def save
+      if new_record?
+        save_on_insert
+      else
+        save_on_update
+      end
+    end
+
     def initialize(attributes = {})
+      self.attributes ||= {}
+
       self.class.column_names.each do |column|
         column = column.to_sym if attributes.has_key? column.to_sym
-        self.send "#{column}=", attributes[column]
+
+        value  = attributes[column]
+
+        self.attributes[column] = value
+        self.send "#{column}=",   value
       end
     end
   end

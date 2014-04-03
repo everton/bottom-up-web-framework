@@ -57,6 +57,32 @@ module Model
           .first['id']
       end
 
+      def update(table_name, id, fields_and_values = {})
+        fields = fields_and_values.keys
+        values = fields_and_values.values
+
+        # Someting like: INTO ( field1=?, field2=?, ..., fieldn=? )
+        placeholders = fields.map { |k| "#{k}=?" }
+
+        query = "UPDATE #{table_name} " +
+          " SET #{placeholders.join(', ') } " +
+          " WHERE id=#{id};"
+
+        App::LOGGER.debug query
+
+        @connection.execute query, values
+      end
+
+      def delete(table_name, options = {})
+        options[:where] ||= {}
+
+        query = "DELETE FROM #{table_name} #{where(options[:where])}"
+
+        App::LOGGER.debug query
+
+        @connection.execute(query, options[:where])
+      end
+
       def transaction(&block)
         @connection.transaction(&block)
       end
@@ -73,16 +99,6 @@ module Model
         App::LOGGER.debug create_sql
 
         @connection.execute create_sql
-      end
-
-      def delete(table_name, options = {})
-        options[:where] ||= {}
-
-        query = "DELETE FROM #{table_name} #{where(options[:where])}"
-
-        App::LOGGER.debug query
-
-        @connection.execute(query, options[:where])
       end
 
       private

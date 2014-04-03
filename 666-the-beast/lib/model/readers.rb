@@ -1,7 +1,6 @@
 module Model
   module Readers
     def all(options = {})
-      puts options.inspect
       @connection.select_all(table_name, options).map do |columns|
         self.new columns
       end
