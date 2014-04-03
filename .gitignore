@@ -1,5 +1,6 @@
 *~
 **/.vagrant
 **/db/*.sql
+**/logs/*.log
 06-rack/config/apache2-sites-available/default-ssl
 06-rack/config/apache2-sites-available/default.dpkg-dist

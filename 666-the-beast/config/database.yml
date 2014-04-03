@@ -1,0 +1,10 @@
+development:
+  adapter: SQLite3
+  encoding: utf8
+  database: db/development.sql
+
+test:
+  adapter: PostgreSQL
+  database: bottom_up_web_framework_test
+  username: postgres
+  host: 127.0.0.1
