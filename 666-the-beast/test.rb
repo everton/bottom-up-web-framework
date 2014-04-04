@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+ENV['BEAST_ENV'] ||= 'test'
+
 require_relative 'config/app'
 
 App::LOGGER.info '>>>>>>>>>>>>>>>>>>>>>>>'
