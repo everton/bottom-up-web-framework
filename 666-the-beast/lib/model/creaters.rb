@@ -11,7 +11,10 @@ module Model
     module InstanceMethods
       private
       def save_on_insert
-        self.id = connection.insert table_name, self.attributes
+        new_attrs = self.attributes.reject {|k, _| k == :id }
+
+        self.id   = connection.insert table_name, new_attrs
+
         return self
       end
     end
