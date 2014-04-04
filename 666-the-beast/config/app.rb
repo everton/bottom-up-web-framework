@@ -17,7 +17,7 @@ class App
 
   def self.database_config
     configs = YAML.load(File.read(DB_CONFIG_FILE)) || {}
-    configs = configs['development']
+    configs = configs[App::BEAST_ENV]
 
     raise "Couldn't found database config for '#{App::BEAST_ENV}'" unless configs
 
