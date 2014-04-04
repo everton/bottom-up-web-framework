@@ -1,9 +1,4 @@
 development:
-  adapter: SQLite3
-  encoding: utf8
-  database: db/development.sql
-
-development_postgres:
   adapter: PostgreSQL
   database: bottom_up_web_framework_ex666_dev
   username: postgres
