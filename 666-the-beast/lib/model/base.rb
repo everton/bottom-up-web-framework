@@ -78,7 +78,7 @@ module Model
 
         value  = attributes[column]
 
-        self.attributes[column] = value
+        self.attributes[column.to_sym] = value
         self.send "#{column}=",   value
       end
     end
