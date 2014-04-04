@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 
 Vagrant::Config.run do |config|
-  config.vm.box = "precise64-postgresql-bottom-up-web-framework"
+  config.vm.box = "precise64-postgresql-bottom-up-web-framework-ex02"
   config.vm.box_url = "https://dl.dropbox.com/u/547141/vagrant-boxes/precise64-postgresql.box"
 
   config.vm.forward_port 5432, 5432
