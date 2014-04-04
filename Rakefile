@@ -9,7 +9,7 @@ end
 task :default => [:test]
 
 task :clean do
-  `rm -rf 01-sqlite3/db/*.sql`
+  `rm -rf **/db/*.sql`
 
   `find ./ -name \\*~ -delete`
 end
