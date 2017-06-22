@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 Vagrant::Config.run do |config|
-  config.vm.box     = 'bare-wheezy'
-  config.vm.box_url = 'https://dl.dropboxusercontent.com/s/xymcvez85i29lym/vagrant-debian-wheezy64.box'
+  config.vm.box = 'debian/wheezy64'
 
   config.vm.forward_port 80, 8000
   config.vm.share_folder "v-data", "/etc/apache2/sites-available/", "./config/apache2-sites-available"
@@ -30,7 +29,7 @@ Vagrant::Config.run do |config|
 
     cmd << 'apt-get -q -y install libapache2-mod-passenger'
 
-    # cmd << 'invoke-rc.d apache2 restart'
+    cmd << 'invoke-rc.d apache2 restart'
 
     shell.inline = cmd.join "\n"
   end
