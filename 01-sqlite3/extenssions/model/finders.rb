@@ -1,4 +1,5 @@
 module Finders
+  # Video.all(where: { user_id: 10 }, limit: 5)
   def all(options = {})
     options[:where] ||= {}
 
