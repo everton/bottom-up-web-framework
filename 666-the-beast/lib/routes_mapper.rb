@@ -27,10 +27,10 @@ class RoutesMapper
       @params = options
     end
 
-    def match(path)
+    def match(requested_path)
       App::LOGGER.debug "Matching '#{path}' against '#{@path}'"
 
-      matches = path.match @path
+      matches = requested_path.match @path
 
       return unless matches
 
