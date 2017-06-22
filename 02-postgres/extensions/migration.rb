@@ -75,13 +75,11 @@ class Migration
     def create!
       puts "Creating table #{name}"
 
-      Model.connection.transaction do
-        puts sequence_sql
-        Model.connection.exec sequence_sql
+      puts sequence_sql
+      Model.connection.exec sequence_sql
 
-        puts create_sql
-        Model.connection.exec create_sql
-      end
+      puts create_sql
+      Model.connection.exec create_sql
     end
 
     def sequence_sql
