@@ -13,4 +13,4 @@ filepath = File.join File.dirname(__FILE__),
 
 template = ERB.new File.read(filepath)
 
-puts template.run(binding)
+puts template.result(binding)
